@@ -1,4 +1,7 @@
-# sleek
 
-an inventory management system for sleek clothings
+### sleek clothings inventory management 
 
+clone the project
+* run `composer update`
+* set up database credentials in .env file
+* Migrate database
