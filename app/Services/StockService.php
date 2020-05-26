@@ -30,6 +30,11 @@ class StockService
         ]);
     }
 
+    public function itemDelete($id)
+    {
+        return $this->item->where('id',$id)->delete();
+    }
+
     
 
 }

@@ -37,7 +37,7 @@ class HomeController extends Controller
         // $item = $this->stockService->allItems();
         // return view('stock.item', compact('item'));
 
-        $data = DB::table('items')->orderBy('id', 'asc')->paginate(5);
+        $data = DB::table('items')->orderBy('id', 'asc')->paginate(20);
         return view('stock.item', compact('data'));
     }
 
@@ -53,7 +53,7 @@ class HomeController extends Controller
                 ->orWhere('code', 'like', '%' . $query . '%')
                 ->orWhere('description', 'like', '%' . $query . '%')
                 ->orderBy($sort_by, $sort_type)
-                ->paginate(5);
+                ->paginate(20);
             return view('pagination_data', compact('data'))->render();
         }
     }
@@ -71,6 +71,12 @@ class HomeController extends Controller
     public function itemExist(Request $request)
     {
         return Item::where('code', $request->code)->first();
+    }
+
+    public function deleteItem($id)
+    {
+        $this->stockService->itemDelete($id);
+        return redirect()->back()->with('error', 'Item deleted successfully');
     }
 
     
