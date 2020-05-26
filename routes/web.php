@@ -24,7 +24,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->middleware('verified');
-Route::get('/item', 'HomeController@item')->name('item');
+
+Route::get('/item', 'HomeController@item');
+
+Route::get('/pagination/fetch_data', 'HomeController@fetch_data');
+
+
+// Route::get('/item', 'HomeController@item')->name('item');
 Route::post('/addItem', 'HomeController@addItem')->name('addItem');
 Route::post('/itemExist', 'HomeController@itemExist');

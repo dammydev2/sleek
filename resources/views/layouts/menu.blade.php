@@ -1,1 +1,1 @@
-<li><a href="{{ route('item') }}">Item</a></li>
+<li><a href="{{ url('item') }}">Item</a></li>

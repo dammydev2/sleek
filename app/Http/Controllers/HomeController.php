@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Item;
 use Illuminate\Http\Request;
 use App\Services\StockService;
+use DB;
+use Datatables;
 
 class HomeController extends Controller
 {
@@ -30,31 +32,46 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function item()
+    public function item(Request $request)
     {
-        $item = $this->stockService->allItems();
-        return view('stock.item', compact('item'));
+        // $item = $this->stockService->allItems();
+        // return view('stock.item', compact('item'));
+
+        $data = DB::table('items')->orderBy('id', 'asc')->paginate(5);
+        return view('stock.item', compact('data'));
     }
 
-    public function addItem(Request $request)   
+    function fetch_data(Request $request)
+    {
+        if ($request->ajax()) {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $query = $request->get('query');
+            $query = str_replace(" ", "%", $query);
+            $data = DB::table('items')
+                ->where('id', 'like', '%' . $query . '%')
+                ->orWhere('code', 'like', '%' . $query . '%')
+                ->orWhere('description', 'like', '%' . $query . '%')
+                ->orderBy($sort_by, $sort_type)
+                ->paginate(5);
+            return view('pagination_data', compact('data'))->render();
+        }
+    }
+
+    public function addItem(Request $request)
     {
         $request->validate([
             'code' => 'required|unique:items',
             'description' => 'required',
         ]);
         $this->stockService->enterItem($request->all());
-        return redirect()->back()->with('success', 'Item added successfully');  
+        return redirect()->back()->with('success', 'Item added successfully');
     }
 
-    public function itemExist(Request $request){
+    public function itemExist(Request $request)
+    {
         return Item::where('code', $request->code)->first();
     }
 
-
+    
 }
-
-
-
-
-
-
