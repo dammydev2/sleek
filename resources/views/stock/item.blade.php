@@ -77,7 +77,8 @@
                     <thead>
                         <tr>
                             <th width="5%" class="sorting" data-sorting_type="asc" data-column_name="id" style="cursor: pointer">ID <span id="id_icon"></span></th>
-                            <th width="30%" class="sorting" data-sorting_type="asc" data-column_name="post_title" style="cursor: pointer">Code <span id="post_title_icon"></span></th>
+                            <th width="10%" class="sorting" data-sorting_type="asc" data-column_name="post_title" style="cursor: pointer">Code <span id="post_title_icon"></span></th>
+                            <th width="20%">Cost Price</th>
                             <th width="50%">Description</th>
                             <th width="5%">Current stock</th>
                             <th width="5%"></th>

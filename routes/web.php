@@ -28,6 +28,7 @@ Auth::routes(['verify' => true]);
 Route::get('/item', 'HomeController@item');
 Route::get('/pagination/fetch_data', 'HomeController@fetch_data');
 Route::get('/deleteItem/{id}', 'HomeController@deleteItem');
+Route::get('/addStockItem/{id}', 'HomeController@addStockItem');
 
 
 // Route::get('/item', 'HomeController@item')->name('item');

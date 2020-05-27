@@ -79,5 +79,11 @@ class HomeController extends Controller
         return redirect()->back()->with('error', 'Item deleted successfully');
     }
 
+    public function addStockItem($id)
+    {
+        $stock = $this->stockService->getCurrentStock($id);
+        return view('stock.addStockItem', compact('stock'));
+    }
+
     
 }

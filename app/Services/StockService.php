@@ -35,6 +35,11 @@ class StockService
         return $this->item->where('id',$id)->delete();
     }
 
+    public function getCurrentStock($id)
+    {
+        return $this->item->where('id',$id)->first();
+    }
+
     
 
 }
