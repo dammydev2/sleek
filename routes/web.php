@@ -34,3 +34,4 @@ Route::get('/addStockItem/{id}', 'HomeController@addStockItem');
 // Route::get('/item', 'HomeController@item')->name('item');
 Route::post('/addItem', 'HomeController@addItem')->name('addItem');
 Route::post('/itemExist', 'HomeController@itemExist');
+Route::post('/enterStock', 'HomeController@enterStock')->name('enterStock');

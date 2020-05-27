@@ -85,5 +85,15 @@ class HomeController extends Controller
         return view('stock.addStockItem', compact('stock'));
     }
 
+    public function enterStock(Request $request)
+    {
+        $request->validate([
+            'cost_price' => 'required',
+            'new_stock' => 'required'
+        ]);
+        $this->stockService->addNewStock($request->all());
+        return redirect('item')->with('success', 'Stock added successfully');
+    }
+
     
 }
