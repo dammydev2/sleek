@@ -77,4 +77,21 @@ class SalesController extends Controller
         $detail = $this->salesService->getSaleDetails();
         return view('sales.payment', compact('detail'));
     }
+
+    public function enterPayment(Request $request)
+    {
+        $request->validate([
+            'customer_name' => 'required',
+            'amount_tendered' => 'required'
+        ]);
+        $this->salesService->addPayment($request->all());
+        return redirect('receipt');
+    }
+
+    public function receipt()
+    {
+        $detail = $this->salesService->saleDetails();
+        $paymentDetails = $this->salesService->paymentDetails();
+        return view('sales.receipt', compact('detail','paymentDetails'));
+    }
 }

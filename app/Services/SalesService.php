@@ -7,19 +7,24 @@ use App\User;
 use App\Item;
 use App\AddStock;
 use App\Sales;
+use App\Payment;
 use Session;
 use Hash;
 use Illuminate\Contracts\Session\Session as SessionSession;
 
 class SalesService
 {
-    protected $user, $item, $addStock, $sales;
-    public function __construct(User $user, Item $item, AddStock $addStock, Sales $sales)
+    protected $user, $item, $addStock, $sales, $payment;
+    public function __construct(
+        User $user, Item $item, AddStock $addStock, 
+        Sales $sales, Payment $payment
+        )
     {
         $this->user = $user;
         $this->item = $item;
         $this->addStock = $addStock;
         $this->sales = $sales;
+        $this->payment = $payment;
     }
 
     public function getAllItem()
@@ -66,5 +71,28 @@ class SalesService
             $amount += $row->selling_price * $row->qty;
         }
         return $amount;
+    }
+
+    public function addPayment(array $credentials)
+    {
+        return $this->payment->create([
+            'seller' => \Auth::User()->name,
+            'customer_name' => $credentials['customer_name'],
+            'rec' => $credentials['rec'],
+            'amount' => $credentials['amount'],
+            'amount_tendered' => $credentials['amount_tendered'],
+            'change' => $credentials['change'],
+            'payment_method' => $credentials['payment_method'],
+        ]);
+    }
+
+    public function saleDetails()
+    {
+        return $this->sales->where('rec', Session::get('rec'))->get();
+    }
+
+    public function paymentDetails()
+    {
+        return $this->payment->where('rec', Session::get('rec'))->first();
     }
 }

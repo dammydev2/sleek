@@ -12,7 +12,7 @@
             <div class="panel-heading">Payment</div>
             <div class="panel-body">
 
-                <form method="post" action="{{ route('enterStock') }}">
+                <form method="post" action="{{ route('enterPayment') }}">
                     @csrf
                     <div class="form-group">
                         <label for="usr">Receipt Number</label>
@@ -25,6 +25,7 @@
                     </div>
 
                     <div class="form-group has-feedback {{ $errors->has('amount_tendered') ? ' has-error' : '' }}">
+                        <label>Amount Tendered</label>
                         <input type="number" id="amount_tendered" class="form-control" name="amount_tendered" placeholder="Amount Tendered">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         @if ($errors->has('amount_tendered'))
@@ -40,6 +41,7 @@
                     </div>
 
                     <div class="form-group has-feedback {{ $errors->has('customer_name') ? ' has-error' : '' }}">
+                        <label>Customer Name</label>
                         <input type="text" class="form-control" name="customer_name" value="Walk-In customer" placeholder="customer name">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                         @if ($errors->has('customer_name'))

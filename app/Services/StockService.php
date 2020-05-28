@@ -6,17 +6,19 @@ use DB;
 use App\User;
 use App\Item;
 use App\AddStock;
+use App\Sales;
 use Session;
 use Hash;
 
 class StockService
 {
-    protected $user, $item, $addStock;
-    public function __construct(User $user, Item $item, AddStock $addStock)
+    protected $user, $item, $addStock, $sales;
+    public function __construct(User $user, Item $item, AddStock $addStock, Sales $sales)
     {
         $this->user = $user;
         $this->item = $item;
         $this->addStock = $addStock;
+        $this->sales = $sales;
     }
 
     public function allItems()
@@ -53,6 +55,12 @@ class StockService
             'stock' => $credentials['new_stock'],
             'cost_price' => $credentials['cost_price'],
         ]);
+    }
+
+    public function getSales()
+    {
+        return $this->sales->where('created_at', '>=', Session::get('from'))
+        ->where('created_at', '<=', Session::get('to'))->get();
     }
 
     

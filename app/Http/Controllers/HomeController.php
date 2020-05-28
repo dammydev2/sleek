@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\StockService;
 use DB;
 use Datatables;
+use Session;
 
 class HomeController extends Controller
 {
@@ -93,6 +94,50 @@ class HomeController extends Controller
         ]);
         $this->stockService->addNewStock($request->all());
         return redirect('item')->with('success', 'Stock added successfully');
+    }
+
+    public function profit()
+    {
+        return view('report.profit');
+    }
+
+    public function checkProfit(Request $request)
+    {
+        $request->validate([
+            'from' => 'required',
+            'to' => 'required',
+        ]);
+        Session::put('from', $request['from']);
+        Session::put('to', $request['to']);
+        return redirect('profitMargin');
+    }
+
+    public function profitMargin()
+    {
+        $data = $this->stockService->getSales();
+        return view('report.profitMargin', compact('data'));
+    }
+
+    public function viewSales()
+    {
+        return view('report.viewSales');
+    }
+
+    public function checkSales(Request $request)
+    {
+        $request->validate([
+            'from' => 'required',
+            'to' => 'required',
+        ]);
+        Session::put('from', $request['from']);
+        Session::put('to', $request['to']);
+        return redirect('salesDate');
+    }
+
+    public function salesDate()
+    {
+        $data = $this->stockService->getSales();
+        return view('report.salesDate', compact('data'));
     }
 
     
