@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\SalesService;
 use App\Item;
+use Session;
 
 class SalesController extends Controller
 {
@@ -68,5 +69,12 @@ class SalesController extends Controller
     public function saleEnter(Request $request)
     {
         $rec = $this->salesService->enterSales($request->all());
+        return redirect('payment');
+    }
+
+    public function payment()
+    {
+        $detail = $this->salesService->getSaleDetails();
+        return view('sales.payment', compact('detail'));
     }
 }

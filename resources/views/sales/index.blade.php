@@ -136,7 +136,7 @@
                         tdata += "<td>" + description + "<input type='hidden' name='description[]' value='" + description + "' class='form-control'/></td>"
                         tdata += "<td>" + price + "<input type='hidden' name='cost_price[]' value='" + price + "' class='form-control'/></td>"
                         tdata += "<td><input class='form-control sellingPrice' type='hidde' name='selling_price[]' /></td>"
-                        tdata += "<td>" + current_stock + "</td></td>"
+                        tdata += "<td class='currentStock'>" + current_stock + "<input type='hidden' name='newStock[]' class='newStock'></td>"
                         tdata += "<td><input type='number' name='qty[]' min='1' value='0' class='form-control qty'/></td>"
                         // tdata += "<td>"+percent+"<input type='hidden' name='percent[]' value='"+percent+"' class='form-control qty'/></td>"
                         tdata += "<td>&#8358;<span class='tamount'>" + price + "</span></td>"
@@ -162,10 +162,14 @@
                 $(document).on("change", "input.qty", function() {
                     v = $(this).val();
                     prc = parseInt($(this).parents("tr").find("input.sellingPrice").val())
+                    currentStock = parseInt($(this).parents("tr").find("td.currentStock").text())
+                    newStock = currentStock - v
                     
+                    $(this).parents("tr").find("input.newStock").val(newStock);
+                    console.log(newStock)
 
                     tamt = prc * v
-                    console.log(tamt)
+                    
                     $(this).parents("tr").find("span.tamount").html(tamt);
                     sumup()
                 })

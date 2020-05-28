@@ -27,6 +27,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/item', 'HomeController@item');
 Route::get('/sales', 'SalesController@sales');
+Route::get('/payment', 'SalesController@payment');
 Route::get('/live_search/action', 'SalesController@action')->name('live_search.action');
 Route::get('/pagination/fetch_data', 'HomeController@fetch_data');
 Route::get('/deleteItem/{id}', 'HomeController@deleteItem');
